@@ -10,13 +10,13 @@
             placeholder="Enter a City"
           />
         </div>
-        <button class="btn-search btn btn-primary">
+        <button class="btn-search btn btn-primary" @click="searchWeather">
           Search <i class="fas fa-search"></i>
         </button>
       </div>
     </div>
     <br />
-    <Weather></Weather>
+    <Weather :city="city" v-if="showWeather"></Weather>
   </div>
 </template>
 
