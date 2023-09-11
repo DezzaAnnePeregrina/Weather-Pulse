@@ -8,6 +8,7 @@
             type="text"
             class="input form-control"
             placeholder="Enter a City"
+            v-model="city"
           />
         </div>
         <button class="btn-search btn btn-primary" @click="searchWeather">

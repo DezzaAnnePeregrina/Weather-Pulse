@@ -3,15 +3,17 @@
     <div class="d-flex">
       <div class="card main-div w-100">
         <div class="p-3">
-          <h2 class="mb-1 day">Monday</h2>
-          <p class="text-light date mb-0">date</p>
-          <small>time</small>
+          <h2 class="mb-1 day">Today</h2>
+          <p class="text-light date mb-0">{{ date }}</p>
+          <small> {{ time }} </small>
           <h2 class="place">
-            <i class="fa fa-location">Rio <small>country</small></i>
+            <i class="fa fa-location">
+              {{ name }} <small>{{ country }}</small></i
+            >
           </h2>
           <div class="temp">
-            <h1 class="weather-temp">18&deg;</h1>
-            <h2 class="text-light">description</h2>
+            <h1 class="weather-temp">{{ temperature }} &deg;</h1>
+            <h2 class="text-light">{{ description }} <img :src="iconUrl" /></h2>
           </div>
         </div>
       </div>
@@ -51,6 +53,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import DaysWeather from "./DaysWeather.vue";
 
 export default (await import("vue")).defineComponent({
@@ -60,12 +63,55 @@ export default (await import("vue")).defineComponent({
     city: String,
   },
   data() {
-    return;
+    return {
+      temperature: null,
+      description: null,
+      iconUrl: null,
+      country: null,
+      date: null,
+      time: null,
+      name: null,
+      sea_Level: null,
+      wind: null,
+      monthName: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+    };
+  },
+
+  async created() {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=cc6c75e2d43e4c8cd713474b4af79c05`
+    );
+    const weatherData = response.data;
+    this.temperature = Math.round(weatherData.main.temp);
+    this.description = weatherData.weather[0].description;
+    this.country = weatherData.sys.country;
+    this.name = weatherData.name;
+    this.wind = weatherData.wind.speed;
+    this.sea_Level = weatherData.main.sea_Level;
+    this.iconUrl = `https://api.openweathermap.org/img/w/${weatherData.weather[0].icon}`;
+
+    const d = new Date();
+    this.date =
+      d.getDate() + "-" + this.monthName[d.getMonth()] + "+" + d.getFullYear();
+    this.time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
   },
 });
 </script>
 
-<style>
+<style scoped>
 body {
   background-color: #343d4b;
 }
