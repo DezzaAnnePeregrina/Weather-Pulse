@@ -22,7 +22,8 @@
           <tbody>
             <tr>
               <th>Sea Level</th>
-              <td>{{ sea_Level }}</td>
+              <td v-if="sea_level > 0">{{ sea_Level }}</td>
+              <td v-else>Null</td>
             </tr>
 
             <tr>
@@ -43,6 +44,7 @@
             <input
               type="button"
               value="Change location"
+              @click="changeLocation"
               class="btn change-btn btn-primary"
             />
           </form>
@@ -90,6 +92,11 @@ export default (await import("vue")).defineComponent({
         "December",
       ],
     };
+  },
+  methods: {
+    changeLocation() {
+      window.location.reload();
+    },
   },
 
   async created() {
