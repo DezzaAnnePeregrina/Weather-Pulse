@@ -22,22 +22,22 @@
           <tbody>
             <tr>
               <th>Sea Level</th>
-              <td>100</td>
+              <td>{{ sea_Level }}</td>
             </tr>
 
             <tr>
-              <th>Sea Level</th>
-              <td>100</td>
+              <th>Humidity</th>
+              <td>{{ humidity }}</td>
             </tr>
 
             <tr>
-              <th>Sea Level</th>
-              <td>100</td>
+              <th>Wind</th>
+              <td>{{ wind }}</td>
             </tr>
           </tbody>
         </table>
 
-        <DaysWeather></DaysWeather>
+        <DaysWeather :cityname="cityname"></DaysWeather>
         <div id="div_Form" class="d-flex m-3 justify-content-center">
           <form action="">
             <input
@@ -64,6 +64,7 @@ export default (await import("vue")).defineComponent({
   },
   data() {
     return {
+      cityname: this.city,
       temperature: null,
       description: null,
       iconUrl: null,
@@ -73,6 +74,7 @@ export default (await import("vue")).defineComponent({
       name: null,
       sea_Level: null,
       wind: null,
+      humidity: null,
       monthName: [
         "January",
         "February",
@@ -100,8 +102,9 @@ export default (await import("vue")).defineComponent({
     this.country = weatherData.sys.country;
     this.name = weatherData.name;
     this.wind = weatherData.wind.speed;
-    this.sea_Level = weatherData.main.sea_Level;
-    this.iconUrl = `https://api.openweathermap.org/img/w/${weatherData.weather[0].icon}`;
+    this.humidity = weatherData.main.humidity;
+    this.sea_Level = weatherData.main.sea_level;
+    this.iconUrl = `https://api.openweathermap.org/img/w/${weatherData.weather[0].icon}.png`;
 
     const d = new Date();
     this.date =
