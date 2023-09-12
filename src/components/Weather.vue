@@ -140,7 +140,7 @@ h2.mb-1.day {
 .main-div {
   border-radius: 20px;
   color: #fff;
-  background-image: ;
+  background-image: url("/public/from_unsplash.jpg");
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
